@@ -69,6 +69,7 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int =
     hours * 3600 + minutes * 60 + seconds
 
 
+
 /**
  * Тривиальная (1 балл)
  *
@@ -153,10 +154,7 @@ fun accountInThreeYears(initial: Int, percent: Int): Double =
  */
 fun numberRevert(number: Int): Int {
     val n = number / 10
-    val n1 = n / 10
-    val n2 = n - n1 * 10
-    val n3 = number - n * 10
-    return n3 * 100 + n2 * 10 + n1
+    return (number - n * 10) * 100 + (n - n / 10 * 10) * 10 + n / 10
 }
 
 
