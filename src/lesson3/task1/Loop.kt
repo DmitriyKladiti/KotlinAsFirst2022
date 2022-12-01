@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -72,7 +73,17 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var m = 10
+    var s = 1
+    for (g in 1..n) {
+        if (m > 1000000000) return 10
+        if (n / m == 0) break
+        m *= 10
+        s += 1
+    }
+    return s
+}
 
 /**
  * Простая (2 балла)
@@ -87,14 +98,28 @@ fun fib(n: Int): Int = TODO()
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    var r = 2
+    for (s in 1..Int.MAX_VALUE) {
+        if (n % r == 0) break
+        r += 1
+    }
+    return r
+}
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    var r = n - 1
+    for (s in 1..n) {
+        if (n % r == 0) break
+        r -= 1
+    }
+    return r
+}
 
 /**
  * Простая (2 балла)
@@ -112,7 +137,26 @@ fun maxDivisor(n: Int): Int = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var t = x
+    var b = 0
+    for (g in 1..Int.MAX_VALUE) {
+        if (t == 1) {
+            break
+        }
+        if (t % 2 == 0) {
+            t /= 2
+            b += 1
+            if (t == 1) break
+        }
+        if (t % 2 != 0) {
+            t = 3 * t + 1
+            b += 1
+            if (t == 1) break
+        }
+    }
+    return b
+}
 
 /**
  * Средняя (3 балла)
@@ -120,7 +164,12 @@ fun collatzSteps(x: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    for (k in 1..Int.MAX_VALUE) {
+        if (k % n == 0 && k % m == 0) return k
+    }
+    return -1
+}
 
 /**
  * Средняя (3 балла)
@@ -192,7 +241,28 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Any {
+    var i = 3
+    if (n < 4) return n * n
+    if (n in 4..15) {
+        for (q in 4..n step 2) {
+            i++
+        }
+        if (i * i > 10) {
+            if (n % 2 == 0) return i * i / 10
+            return i * i % 10
+        }
+    }
+    if (n > 16) {
+        for (q in 16..n step 3) {
+            if (q == n) return (i + 7) * (i + 7) / 100
+            if (q + 1 == n) return (i + 7) * (i + 7) / 10 * 10 - (i + 7) * (i + 7) / 100 * 100
+            if (q + 2 == n) return (i + 7) * (i + 7) - (i + 7) * (i + 7) / 10 * 10
+            i++
+        }
+    }
+    return -1
+}
 
 /**
  * Сложная (5 баллов)
