@@ -83,6 +83,7 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
 }
 
 
+
 /**
  * Тривиальная (1 балл)
  *
