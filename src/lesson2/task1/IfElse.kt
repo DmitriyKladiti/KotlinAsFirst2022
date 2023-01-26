@@ -3,7 +3,6 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
-import lesson1.task1.sqr
 import java.lang.Math.abs
 import kotlin.math.max
 import kotlin.math.pow
@@ -115,17 +114,11 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ): Int {
-    if (kingX == rookX1 || kingX == rookX2){
-        if (kingX == rookX1 && kingX == rookX2) return 3
-        if (kingX == rookX1) return 1
-        if (kingY == rookY2 || kingY == rookY1) return 3
-        return 2
+    if (kingX == rookX1 || kingY == rookY1) {
+        if (kingX == rookX2 || kingY == rookY2) return 3
+        if (kingX != rookX2 && kingY != rookY2) return 1
     }
-    if (kingY == rookY1 || kingY == rookY2){
-        if (kingY == rookY1 && kingX == rookY2) return 3
-        if (kingY == rookY1) return 1
-        return 2
-    }
+    if (kingX == rookX2 || kingY == rookY2) return 2
     return 0
 }
 
@@ -169,21 +162,27 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val bb = b.pow(2)
     val cc = c.pow(2)
     if (a >= b && a >= c) {
-        if (a > b + c) return -1
-        if (aa < bb + cc) return 0
-        if (aa == bb + cc) return 1
-        return 2
+        return when {
+            a > b + c -> return -1
+            aa < bb + cc -> return 0
+            aa == bb + cc -> return 1
+            else -> 2
+        }
     }
     if (b >= a && b >= c) {
-        if (b > a + c) return -1
-        if (bb < aa + cc) return 0
-        if (bb == aa + cc) return 1
-        return 2
+        return when {
+            b > a + c -> -1
+            bb < aa + cc -> 0
+            bb == aa + cc -> 1
+            else -> 2
+        }
     }
     if (c >= a && c >= b) {
-        if (cc < aa + bb) return 0
-        if (cc == aa + bb) return 1
-        return 2
+        return when {
+            cc < aa + bb -> 0
+            cc == aa + bb -> 1
+            else -> 2
+        }
     }
     if (a == b && b == c) return 0
     return -1
