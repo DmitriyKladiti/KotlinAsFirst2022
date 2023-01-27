@@ -253,16 +253,17 @@ fun squareSequenceDigit(n: Int): Any {
             return i * i % 10
         }
     }
-    if (n > 16) {
+    if (n >= 16) {
         for (q in 16..n step 3) {
             if (q == n) return (i + 7) * (i + 7) / 100
-            if (q + 1 == n) return (i + 7) * (i + 7) / 10 * 10 - (i + 7) * (i + 7) / 100 * 100
+            if (q + 1 == n) return ((i + 7) * (i + 7) / 10 * 10 - (i + 7) * (i + 7) / 100 * 100) / 10
             if (q + 2 == n) return (i + 7) * (i + 7) - (i + 7) * (i + 7) / 10 * 10
             i++
         }
     }
     return -1
 }
+
 
 /**
  * Сложная (5 баллов)

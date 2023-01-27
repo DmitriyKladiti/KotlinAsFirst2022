@@ -1,9 +1,8 @@
-@file:Suppress("UNUSED_PARAMETER")
+@file:Suppress("UNUSED_PARAMETER", "UNREACHABLE_CODE")
 
 package lesson2.task2
 
 import lesson1.task1.sqr
-import kotlin.concurrent.timerTask
 import kotlin.math.abs
 import kotlin.math.pow
 
@@ -50,10 +49,10 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
  */
 fun daysInMonth(month: Int, year: Int): Int {
     if (month == 8) return 31
-    if (month / 2 * 2 != month) return 31
+    if (month % 2 != 0) return 31
     if (month == 2) {
         if (year == 1900) return 28
-        if (year / 4 * 4 == year) return 29
+        if (year % 4 == 0) return 29
         return 28
     }
     return 30
