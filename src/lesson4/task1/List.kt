@@ -121,7 +121,14 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double = TODO()
+fun abs(v: List<Double>): Double {
+    if (v.size == 0) return 0.0
+    val v1 = mutableListOf<Double>()
+    for (i in 0 until v.size) {
+        v1.add(v[i].pow(2.0))
+    }
+    return sqrt(v1.sum())
+}
 
 /**
  * Простая (2 балла)
@@ -253,7 +260,16 @@ fun factorizeToString(n: Int): String {
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    val list = mutableListOf<Int>()
+    var n1 = n
+    for (q in 0..n) {
+        list.add(n1 % base)
+        n1 /= base
+        if (n1 < 1) break
+    }
+    return list.reversed()
+}
 
 /**
  * Сложная (4 балла)
@@ -266,7 +282,23 @@ fun convert(n: Int, base: Int): List<Int> = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String {
+    val list = mutableListOf<Int>()
+    var n1 = n
+    for (q in 0..n) {
+        list.add(n1 % base)
+        n1 /= base
+        if (n1 < 1) break
+    }
+    var r = 9
+    var l = ("abcdefghijklmnopqrstuvwxyz")
+    return list.reversed().joinToString(separator = "") {
+       when {
+            it > 9 -> ((l[it - 10]).toString())
+            else -> "$it"
+        }
+    }
+}
 
 /**
  * Средняя (3 балла)
