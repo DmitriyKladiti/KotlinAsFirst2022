@@ -1,4 +1,4 @@
-@file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence")
+@file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence", "UNREACHABLE_CODE")
 
 package lesson5.task1
 
@@ -96,7 +96,18 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *   buildGrades(mapOf("Марат" to 3, "Семён" to 5, "Михаил" to 5))
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
-fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
+fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
+    var map = mutableMapOf<Int, List<String>>()
+    for ((name, grade) in grades) {
+        val list = mutableListOf<String>()
+        list.clear()
+        for ((n, g) in grades) {
+            if (grade == g) list.add(n)
+        }
+        map[grade] = list
+    }
+    return map
+}
 
 /**
  * Простая (2 балла)
@@ -108,7 +119,15 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "z", "b" to "sweet")) -> true
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
-fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
+fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
+    for ((bstr1, bstr2) in b) {
+        for ((astr1, astr2) in a) {
+            if (bstr1 == astr1 && bstr2 == astr2) return true
+        }
+        break
+    }
+    return false
+}
 
 /**
  * Простая (2 балла)
@@ -125,7 +144,15 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
  *     -> a changes to mutableMapOf() aka becomes empty
  */
 fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
-    TODO()
+    for ((astr1, astr2) in a) {
+        for ((bstr1, bstr2) in b) {
+            if (astr1 == bstr1 && astr2 == bstr2) a.remove(astr1)
+            break
+        }
+    }
+
+    //не работает?
+
 }
 
 /**
@@ -135,7 +162,16 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  * В выходном списке не должно быть повторяющихся элементов,
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
-fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = TODO()
+fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
+    var list = mutableListOf<String>()
+    for (i in 0 until a.size) {
+        for (ii in 0 until b.size) {
+            if (a[i] == b[ii]) list.add(b[ii])
+            break
+        }
+    }
+    return list.toSet().toList()
+}
 
 /**
  * Средняя (3 балла)
@@ -154,7 +190,26 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = TODO()
  *     mapOf("Emergency" to "911", "Police" to "02")
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
-fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> = TODO()
+fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
+    val mapC = mutableMapOf<String, String>()
+    val mapA1 = mutableMapOf<String, String>()
+    mapA1 += mapA
+    for ((strb1, strb2) in mapB) {
+        for ((stra1, stra2) in mapA1) {
+            if (stra1 == strb1) {
+                if (stra2 == strb2) mapC[stra1] = stra2
+                if (stra2 != strb2) mapC[stra1] = ("$stra2, $strb2")
+                if (mapA1.size > 1) mapA1.remove(stra1)
+                break
+            }
+            if (stra1 != strb1) {
+                mapC[strb1] = strb2
+                if (mapA1.size < mapB.size && mapA.size > 1) mapC[stra1] = stra2
+            }
+        }
+    }
+    return mapC
+}
 
 /**
  * Средняя (4 балла)
@@ -166,7 +221,23 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *   averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
-fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> = TODO()
+fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
+    val map = mutableMapOf<String, Double>()
+    var i = 1
+    var realcost = 0.0
+    for ((str, cost) in stockPrices) {
+        for ((str1, cost1) in stockPrices) {
+            if (str == str1) {
+                realcost += cost1
+                map[str] = (realcost) / i
+                i++
+            }
+        }
+        i = 1
+        realcost = 0.0
+    }
+    return map
+}
 
 /**
  * Средняя (4 балла)
