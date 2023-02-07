@@ -146,7 +146,7 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
 fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
     for ((astr1, astr2) in a) {
         for ((bstr1, bstr2) in b) {
-            if (astr1 == bstr1 && astr2 == bstr2) a.remove(astr1)
+            if (astr1 == bstr1 && astr2 == bstr2) a.remove(bstr1)
             break
         }
     }
@@ -254,7 +254,23 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
+    val map = mutableMapOf<String, Double>()
+    for ((name, type) in stuff) {
+        if (type.first == kind) {
+            map[name] = type.second
+        }
+    }
+    if (map.isEmpty()) return null
+    for ((name, cost) in map) {
+        for ((name1, cost1) in map) {
+            if (cost > cost1) map.remove(name)
+        }
+        return name
+        println(name)
+    }
+    return ""
+}
 
 /**
  * Средняя (3 балла)
