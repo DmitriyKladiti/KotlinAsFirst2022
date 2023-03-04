@@ -74,7 +74,36 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    var date = ""
+    var month = ""
+    var year = ""
+    val map = mutableMapOf<String, Pair<String, Int>>(
+        "января" to Pair("01", 31), "февраля" to Pair("02", 29),
+        "марта" to Pair("03", 31), "апреля" to Pair("04", 30),
+        "мая" to Pair("05", 31), "июня" to Pair("06", 30),
+        "июля" to Pair("07", 31), "августа" to Pair("08", 31),
+        "сентября" to Pair("09", 30), "октября" to Pair("10", 31),
+        "ноября" to Pair("11", 30), "декабря" to Pair("12", 31)
+    )
+    try {
+        var dates = str.split(" ")
+        for ((MONTH, PAIR) in map) {
+            if (dates[1] == MONTH && dates[0].toInt() <= PAIR.second) {
+                date = dates[0]
+                if (date.toInt() < 10) date = "0$date" else "$date"
+                month = PAIR.first
+                year = dates[2]
+                if (year.toInt() % 4 != 0 && month == "02" && date.toInt() > 28) return ""
+                return "$date.$month.$year"
+            }
+        }
+        return ""
+    }
+    catch (e: IndexOutOfBoundsException) {
+        return ""
+    }
+}
 
 /**
  * Средняя (4 балла)
