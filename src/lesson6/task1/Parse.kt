@@ -88,6 +88,7 @@ fun dateStrToDigit(str: String): String {
     )
     try {
         var dates = str.split(" ")
+        if (dates.size > 3) return ""
         for ((MONTH, PAIR) in map) {
             if (dates[1] == MONTH && dates[0].toInt() <= PAIR.second) {
                 date = dates[0]
@@ -103,6 +104,9 @@ fun dateStrToDigit(str: String): String {
     catch (e: IndexOutOfBoundsException) {
         return ""
     }
+    catch (e: NumberFormatException) {
+        return ""
+    }
 }
 
 /**
@@ -115,7 +119,41 @@ fun dateStrToDigit(str: String): String {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    var date = ""
+    var month = ""
+    var year = ""
+    val map = mutableMapOf<String, Pair<String, Int>>(
+        "01" to Pair("января", 31), "02" to Pair("февраля", 29),
+        "03" to Pair("марта", 31), "04" to Pair("апреля", 30),
+        "05" to Pair("мая", 31), "06" to Pair("июня", 30),
+        "07" to Pair("июля", 31), "08" to Pair("августа", 31),
+        "09" to Pair("сентября", 30), "10" to Pair("октября", 31),
+        "11" to Pair("ноября", 30), "12" to Pair("декабря", 31)
+    )
+    try {
+        var dates = digital.split(".")
+        if (dates.size > 3) return ""
+        for ((MONTH, PAIR) in map) {
+            if (dates[1] == MONTH && dates[0].toInt() <= PAIR.second) {
+                date = dates[0]
+                if (date.first().toString() == "0") date = date.last().toString()
+                month = PAIR.first
+                year = dates[2]
+                if (year.toInt() % 4 != 0 && month == "февраля" && date.toInt() > 28) return ""
+                return "$date $month $year"
+            }
+            println("$date $month $year")
+        }
+        return ""
+    }
+    catch (e: IndexOutOfBoundsException) {
+        return ""
+    }
+    catch (e: NumberFormatException) {
+        return ""
+    }
+}
 
 /**
  * Средняя (4 балла)
@@ -131,7 +169,11 @@ fun dateDigitToStr(digital: String): String = TODO()
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    if (phone.contains(Regex("""[^(0-9)+ -]"""))) return ""
+    if (phone.contains(Regex("""\((?!\d)"""))) return ""
+    return Regex("""[^0-9+]""").replace(phone, "")
+}
 
 /**
  * Средняя (5 баллов)
@@ -143,7 +185,17 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    val number = jumps.split(" ")
+    if (number.size == 0) return -1
+    val list = mutableListOf<Int>()
+    for (i in 0 until number.size) {
+        if (number[i].contains(Regex("""[^0-9-% ]"""))) return -1
+        if (number[i].contains(Regex("""[0-9]"""))) list.add(number[i].toInt())
+    }
+    if (list.size == 0) return -1
+    return list.maxOrNull()!!
+}
 
 /**
  * Сложная (6 баллов)
@@ -156,7 +208,18 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    val number = jumps.split(" ")
+    if (number.size == 0) return -1
+    val list = mutableListOf<Int>()
+    for (i in 0 until number.size) {
+        if (number[i].contains(Regex("""[^0-9-%+ ]"""))) return -1
+        if (number[i].contains(Regex("""[0-9]""")) &&
+            number[i + 1].contains(Regex("""[+]"""))) list.add(number[i].toInt())
+    }
+    if (list.size == 0) return -1
+    return list.maxOrNull()!!
+}
 
 /**
  * Сложная (6 баллов)
@@ -178,7 +241,17 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int = TODO()/*{
+    var STR = str.split(" ")
+    if (STR.size <= 1) return -1
+    var letters = 0
+    for (i in 0 until STR.size) {
+        if (STR[i].contains(Regex("""[^А-яЁё]"""))) return -1
+        if (STR[i] == STR[i + 1]) return letters
+        letters += STR[i].length + 1
+    }
+    return -1
+}*/
 
 /**
  * Сложная (6 баллов)
