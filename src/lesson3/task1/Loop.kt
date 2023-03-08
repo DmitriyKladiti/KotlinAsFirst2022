@@ -100,7 +100,7 @@ fun fib(n: Int): Int = TODO()
  */
 fun minDivisor(n: Int): Int {
     var r = 2
-    for (s in 1..Int.MAX_VALUE) {
+    for (s in 1..n) {
         if (n % r == 0) break
         r += 1
     }
