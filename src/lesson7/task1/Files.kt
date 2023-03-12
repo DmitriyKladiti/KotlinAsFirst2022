@@ -68,7 +68,7 @@ fun deleteMarked(inputName: String, outputName: String) {
     for (line in File(inputName).readLines()) {
         if (line.contains(Regex("""([А-яЁё_])_"""))) writer.write(line)
         else {
-            if (i != 0 && i != File(inputName).readLines().size - 1) writer.newLine()
+            if (i != 0 && i != File(inputName).readLines().size) writer.newLine()
         }
         i++
     }
@@ -122,7 +122,30 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
 *
 */
 fun sibilants(inputName: String, outputName: String) {
-TODO()
+   /* val writer = File(outputName).bufferedWriter()
+    var i = ""
+    for (line in File(inputName).readLines()) {
+        for (word in line.split(Regex(" "))) {
+            if (word.contains(Regex("""[^ЖжЧчШшЩщ]"""))) writer.newLine()
+            if (word.contains(Regex("""([ЖжЧчШшЩщ])ИиАаУу"""))) writer.write(word + " ")
+            else {
+                var error = word.split("")
+                for (letters in 0 until error.size) {
+                    when {
+                        error[letters] == "Ы" -> error[letters] == "И"
+                        error[letters] == "ы" -> error[letters] == "и"
+                        error[letters] == "Я" -> error[letters] == "А"
+                        error[letters] == "я" -> error[letters] == "а"
+                        error[letters] == "Ю" -> error[letters] == "У"
+                        error[letters] == "ю" -> error[letters] == "у"
+                    }
+                    i += error[letters]
+                }
+                writer.write(i)
+            }
+        }
+    }
+    writer.close()*/
 }
 
 /**
