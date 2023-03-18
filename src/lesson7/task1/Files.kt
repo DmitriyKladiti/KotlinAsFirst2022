@@ -64,16 +64,14 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  */
 fun deleteMarked(inputName: String, outputName: String) {
     val writer = File(outputName).bufferedWriter()
-    var i = 0
-    for (line in File(inputName).readLines()) {
-        if (line.contains(Regex("""^(?!_)"""))) {
+    for ((i, line) in File(inputName).readLines().withIndex()) {
+        if (line.contains(Regex("""^(_)"""))) {
+            if (i != 0) writer.newLine()
+        }
+        else {
             if (line == "") writer.newLine()
             writer.write(line)
         }
-        else {
-            if (i != 0) writer.newLine()
-        }
-        i++
     }
     writer.close()
 }
