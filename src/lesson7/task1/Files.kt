@@ -69,7 +69,7 @@ fun deleteMarked(inputName: String, outputName: String) {
             if (i != 0) writer.newLine()
         }
         else {
-            if (line == "") writer.newLine()
+            if (line == "") writer.write("\n")
             writer.write(line)
         }
     }
