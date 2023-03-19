@@ -66,11 +66,11 @@ fun deleteMarked(inputName: String, outputName: String) {
     val writer = File(outputName).bufferedWriter()
     for ((i, line) in File(inputName).readLines().withIndex()) {
         if (line.contains(Regex("""^(_)"""))) {
-            if (i != 0) writer.newLine()
+            if (i != 0) writer.write("\n")
         }
         else {
             if (line == "") writer.write("\n")
-            writer.write(line)
+            else writer.write(line)
         }
     }
     writer.close()
@@ -94,7 +94,6 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
             val line1 = line.toLowerCase()
             error++
             for (word in line1.split(Regex(substrings[i].toLowerCase()))) {
-                //if (word.toLowerCase().matches(Regex(substrings[i].toLowerCase()))) number++
                 number++
                 println(word)
                 println(number)
