@@ -246,9 +246,14 @@ fun firstDuplicateIndex(str: String): Int {
     if (STR.size <= 1) return -1
     var letters = 0
     for (i in STR.indices) {
-        if (STR[i].contains(Regex("""[^А-яЁёA-z]"""))) return -1
-        if (STR[i].toLowerCase() == STR[i + 1].toLowerCase()) return letters
-        letters += STR[i].length + 1
+        try {
+            if (STR[i].contains(Regex("""[^А-яЁёA-z]"""))) return -1
+            if (STR[i].toLowerCase() == STR[i + 1].toLowerCase()) return letters
+            letters += STR[i].length + 1
+        }
+        catch (e: IndexOutOfBoundsException) {
+            return -1
+        }
     }
     return -1
 }
