@@ -66,11 +66,12 @@ fun deleteMarked(inputName: String, outputName: String) {
     val writer = File(outputName).bufferedWriter()
     for ((i, line) in File(inputName).readLines().withIndex()) {
         if (line.contains(Regex("""^(_)"""))) {
-            if (i != 0) writer.write("\n")
+            if (i != 0) writer.newLine()
         }
         else {
-            if (line == "") writer.write("\n")
-            else writer.write(line)
+            if (line == "") writer.newLine()
+            //else writer.write(line)
+            writer.write(line)
         }
     }
     writer.close()
@@ -165,10 +166,11 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
 fun sibilants(inputName: String, outputName: String) {
     /*val writer = File(outputName).bufferedWriter()
     var i = ""
+    //if (STR[i].contains(Regex("""[^А-яЁёA-z]""")))
     for (line in File(inputName).readLines()) {
         for (word in line.split(Regex(" "))) {
-            if (word.contains(Regex("""[ЖжЧчШшЩщ]+(?![ЫыЯяЮю])"""))) writer.write(word + " ")
-            if (word.contains(Regex("""([ЖжЧчШшЩщ])ЫыЯяЮю"""))) {
+            //if (word.contains(Regex("""[^ЖжЧчШшЩщ]ЫыЯяЮю"""))) writer.write(word + " ")
+            if (word.contains(Regex("""[ЖжЧчШшЩщ]Ы|ы|Я|я|Ю|ю"""))) {
                 var error = word.split(Regex(""))
                 for (q in 0 until error.size){
                     if (error[q].contains(Regex("[ЫыЯяЮю]"))) {
@@ -182,13 +184,15 @@ fun sibilants(inputName: String, outputName: String) {
                         }
                         //i += error[q]
                     }
-                    i += error[q]
+                    else i += error[q]
                 }
                 writer.write(i + " ")
                 i = ""
             }
+            else writer.write(word + " ")
             //else writer.write(word + "")
         }
+        writer.newLine()
     }
     writer.close()*/
 }
