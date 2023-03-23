@@ -88,7 +88,7 @@ fun deleteMarked(inputName: String, outputName: String) {
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
     val map = mutableMapOf<String, Int>()
     var WORD = ""
-    var q = 0
+    var q = 1
     var number = 0
     for (i in 0 until substrings.size) {
         for (line in File(inputName).readLines()) {
@@ -115,7 +115,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
                 }
                 q++
             }
-            q = 0
+            q = 1
         }
         map[substrings[i]] = number
         number = 0
@@ -163,27 +163,31 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
 *
 */
 fun sibilants(inputName: String, outputName: String) {
-   /* val writer = File(outputName).bufferedWriter()
+    /*val writer = File(outputName).bufferedWriter()
     var i = ""
     for (line in File(inputName).readLines()) {
         for (word in line.split(Regex(" "))) {
-            if (word.contains(Regex("""[^ЖжЧчШшЩщ]"""))) writer.newLine()
-            if (word.contains(Regex("""([ЖжЧчШшЩщ])ИиАаУу"""))) writer.write(word + " ")
-            else {
-                var error = word.split("")
-                for (letters in 0 until error.size) {
-                    when {
-                        error[letters] == "Ы" -> error[letters] == "И"
-                        error[letters] == "ы" -> error[letters] == "и"
-                        error[letters] == "Я" -> error[letters] == "А"
-                        error[letters] == "я" -> error[letters] == "а"
-                        error[letters] == "Ю" -> error[letters] == "У"
-                        error[letters] == "ю" -> error[letters] == "у"
+            if (word.contains(Regex("""[ЖжЧчШшЩщ]+(?![ЫыЯяЮю])"""))) writer.write(word + " ")
+            if (word.contains(Regex("""([ЖжЧчШшЩщ])ЫыЯяЮю"""))) {
+                var error = word.split(Regex(""))
+                for (q in 0 until error.size){
+                    if (error[q].contains(Regex("[ЫыЯяЮю]"))) {
+                        when {
+                            error[q] == "Ы" -> i += "И"
+                            error[q] == "ы" -> i += "и"
+                            error[q] == "Я" -> i += "А"
+                            error[q] == "я" -> i += "а"
+                            error[q] == "Ю" -> i += "У"
+                            error[q] == "ю" -> i += "у"
+                        }
+                        //i += error[q]
                     }
-                    i += error[letters]
+                    i += error[q]
                 }
-                writer.write(i)
+                writer.write(i + " ")
+                i = ""
             }
+            //else writer.write(word + "")
         }
     }
     writer.close()*/
