@@ -164,16 +164,19 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
 *
 */
 fun sibilants(inputName: String, outputName: String) {
-    /*val writer = File(outputName).bufferedWriter()
+    val writer = File(outputName).bufferedWriter()
     var i = ""
-    //if (STR[i].contains(Regex("""[^А-яЁёA-z]""")))
+    var space = 0
     for (line in File(inputName).readLines()) {
+        val number = line.split(Regex(" "))
         for (word in line.split(Regex(" "))) {
-            //if (word.contains(Regex("""[^ЖжЧчШшЩщ]ЫыЯяЮю"""))) writer.write(word + " ")
+            space++
             if (word.contains(Regex("""[ЖжЧчШшЩщ]Ы|ы|Я|я|Ю|ю"""))) {
-                var error = word.split(Regex(""))
-                for (q in 0 until error.size){
-                    if (error[q].contains(Regex("[ЫыЯяЮю]"))) {
+                val error = word.split(Regex(""))
+                for (q in 0 until error.size) {
+                    if (q > 1 && error[q - 1].contains(Regex("[ЖжЧчШшЩщ]"))
+                        && error[q].contains(Regex("[ЫыЯяЮю]"))
+                    ) {
                         when {
                             error[q] == "Ы" -> i += "И"
                             error[q] == "ы" -> i += "и"
@@ -182,19 +185,23 @@ fun sibilants(inputName: String, outputName: String) {
                             error[q] == "Ю" -> i += "У"
                             error[q] == "ю" -> i += "у"
                         }
-                        //i += error[q]
+                    } else {
+                        i += error[q]
                     }
-                    else i += error[q]
                 }
-                writer.write(i + " ")
+                if (number.size - space == 0) writer.write(i)
+                else writer.write(i + " ")
                 i = ""
             }
-            else writer.write(word + " ")
-            //else writer.write(word + "")
+            else {
+                if (number.size - space == 0) writer.write(word)
+                else writer.write(word + " ")
+            }
         }
         writer.newLine()
+        space = 0
     }
-    writer.close()*/
+    writer.close()
 }
 
 /**
